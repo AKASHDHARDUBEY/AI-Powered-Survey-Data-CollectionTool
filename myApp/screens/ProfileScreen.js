@@ -42,21 +42,17 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   const getRoleDisplayName = () => {
-    switch (userRole) {
-      case 'b2b': return 'Wholesale Buyer (B2B)';
-      case 'b2c': return 'Retail Customer (B2C)';
-      case 'admin': return 'SV Traders Admin';
-      default: return 'User';
-    }
+    if (userRole === 'b2b') return 'Wholesale Buyer (B2B)';
+    if (userRole === 'b2c') return 'Retail Customer (B2C)';
+    if (userRole === 'admin') return 'SV Traders Admin';
+    return 'User';
   };
 
   const getRoleColor = () => {
-    switch (userRole) {
-      case 'b2b': return '#f39c12';
-      case 'b2c': return '#3498db';
-      case 'admin': return '#e74c3c';
-      default: return '#95a5a6';
-    }
+    if (userRole === 'b2b') return '#f39c12';
+    if (userRole === 'b2c') return '#3498db';
+    if (userRole === 'admin') return '#e74c3c';
+    return '#95a5a6';
   };
 
   return (

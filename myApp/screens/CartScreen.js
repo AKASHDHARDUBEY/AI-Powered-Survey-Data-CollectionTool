@@ -22,19 +22,22 @@ const CartScreen = ({ navigation, route }) => {
     if (newQuantity <= 0) {
       setCart(cart.filter(item => item.id !== productId));
     } else {
-      setCart(cart.map(item =>
-        item.id === productId
-          ? { ...item, quantity: newQuantity }
-          : item
-      ));
+      setCart(cart.map(item => {
+        if (item.id === productId) {
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      }));
     }
   };
 
   const calculateTotal = () => {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    // B2B bulk discount
-    const discount = userRole === 'b2b' ? subtotal * 0.1 : 0; // 10% discount for B2B
+    let discount = 0;
+    if (userRole === 'b2b') {
+      discount = subtotal * 0.1;
+    }
     
     return {
       subtotal,

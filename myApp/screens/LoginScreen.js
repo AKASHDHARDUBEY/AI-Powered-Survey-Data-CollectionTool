@@ -20,13 +20,11 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    // Simple validation - in real app, this would connect to backend
     if (username.length < 3 || password.length < 3) {
       Alert.alert('Error', 'Username and password must be at least 3 characters');
       return;
     }
 
-    // Navigate to main app based on role
     navigation.replace('MainApp', { userRole: selectedRole, username });
   };
 

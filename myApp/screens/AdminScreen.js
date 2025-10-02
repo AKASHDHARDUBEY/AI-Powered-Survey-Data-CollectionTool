@@ -13,7 +13,6 @@ import {
 const AdminScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('inventory');
   
-  // Sample data - in real app, this would come from API
   const [inventory, setInventory] = useState([
     { id: '1', name: 'Premium Rice 5kg', stock: 50, price: 250, category: 'Food' },
     { id: '2', name: 'Cooking Oil 1L', stock: 30, price: 120, category: 'Food' },
@@ -45,9 +44,10 @@ const AdminScreen = ({ navigation }) => {
 
     const product = {
       id: (inventory.length + 1).toString(),
-      ...newProduct,
+      name: newProduct.name,
       price: parseFloat(newProduct.price),
       stock: parseInt(newProduct.stock),
+      category: newProduct.category,
     };
 
     setInventory([...inventory, product]);
@@ -56,9 +56,12 @@ const AdminScreen = ({ navigation }) => {
   };
 
   const updateStock = (productId, newStock) => {
-    setInventory(inventory.map(item =>
-      item.id === productId ? { ...item, stock: newStock } : item
-    ));
+    setInventory(inventory.map(item => {
+      if (item.id === productId) {
+        return { ...item, stock: newStock };
+      }
+      return item;
+    }));
   };
 
   const renderInventoryItem = ({ item }) => (
@@ -97,12 +100,10 @@ const AdminScreen = ({ navigation }) => {
   );
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case 'Completed': return '#27ae60';
-      case 'Processing': return '#f39c12';
-      case 'Pending': return '#e74c3c';
-      default: return '#95a5a6';
-    }
+    if (status === 'Completed') return '#27ae60';
+    if (status === 'Processing') return '#f39c12';
+    if (status === 'Pending') return '#e74c3c';
+    return '#95a5a6';
   };
 
   const getInventoryStats = () => {

@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 
-// Import screens
 import LoginScreen from './screens/LoginScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import CartScreen from './screens/CartScreen';
@@ -15,7 +14,6 @@ import AdminScreen from './screens/AdminScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Tab Navigator for main app
 function TabNavigator({ route }) {
   const { userRole } = route.params;
   
@@ -71,7 +69,6 @@ function TabNavigator({ route }) {
   );
 }
 
-// Main App Navigator
 function MainAppNavigator() {
   return (
     <Stack.Navigator initialRouteName="Login">

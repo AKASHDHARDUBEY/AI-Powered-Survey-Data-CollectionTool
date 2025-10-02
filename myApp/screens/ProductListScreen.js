@@ -14,7 +14,6 @@ const ProductListScreen = ({ navigation, route }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [cart, setCart] = useState([]);
 
-  // Sample product data - in real app, this would come from API
   const [products] = useState([
     {
       id: '1',
@@ -58,20 +57,22 @@ const ProductListScreen = ({ navigation, route }) => {
     },
   ]);
 
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = products.filter(product => {
+    const query = searchQuery.toLowerCase();
+    return product.name.toLowerCase().includes(query) || 
+           product.category.toLowerCase().includes(query);
+  });
 
   const addToCart = (product) => {
-    const existingItem = cart.find(item => item.id === product.id);
+    const found = cart.find(item => item.id === product.id);
     
-    if (existingItem) {
-      setCart(cart.map(item =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
+    if (found) {
+      setCart(cart.map(item => {
+        if (item.id === product.id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      }));
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
@@ -124,7 +125,6 @@ const ProductListScreen = ({ navigation, route }) => {
         </View>
       );
     }
-    return null;
   };
 
   return (
